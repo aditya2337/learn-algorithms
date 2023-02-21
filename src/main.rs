@@ -2,6 +2,7 @@ mod binary_search;
 mod bubble_sort;
 mod crystal_balls;
 mod linear_search;
+mod linked_lists;
 
 fn i32_vector_to_string(i32_vec: &Vec<i32>) -> String {
     let string_vec: Vec<String> = i32_vec.iter().map(|x| x.to_string()).collect();
@@ -10,7 +11,7 @@ fn i32_vector_to_string(i32_vec: &Vec<i32>) -> String {
 
 fn search_algorithms() {
     let haystack: Vec<i32> = vec![1, 2, 4, 5, 6, 6, 7, 8];
-    let mut unsorted_list:  Vec<i32> = vec![1, 11, 9, 5, 2, 24, 4, 8];
+    let mut unsorted_list: Vec<i32> = vec![1, 11, 9, 5, 2, 24, 4, 8];
 
     println!(
         "Linear search: {}",
@@ -29,6 +30,13 @@ fn search_algorithms() {
         "Bubble sortedList: {}",
         i32_vector_to_string(&bubble_sort::srt(&mut unsorted_list))
     );
+
+    let mut ll = linked_lists::LinkedList::<i32>::new();
+    println!("Linked list length is: {:?}", ll.get_length());
+    ll.append(2);
+    ll.append(2);
+    println!("Linked list length is: {:?}", ll);
+    println!("Linked list length is: {:?}", ll.get_length());
 }
 
 fn main() {
