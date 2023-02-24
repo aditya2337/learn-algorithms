@@ -76,6 +76,33 @@ where
         false
     }
 
+    pub fn delete_at(&mut self, idx: i32) -> bool {
+        let idx_to_check = idx - 1;
+        self.check_idx_validity(&idx_to_check);
+
+        let mut current_node = self.head.as_mut();
+        let mut current_index = 0;
+
+        while let Some(node) = current_node {
+
+            if idx_to_check == current_index - 1 {
+                let node_to_delete = node.next.take();
+                match node_to_delete {
+                    Some(node_exists) => {
+                        println!("do we get here tho");
+                        node.next = node_exists.next;
+                    }
+                    // TODO: Delete the head 😱
+                    None => ()
+                }
+                return true;
+            }
+            current_node = node.next.as_mut();
+            current_index += 1;
+        }
+        false
+    }
+
     pub fn append(&mut self, value: T) {
         let mut new_tail = Box::new(Node::new(value));
         let raw_tail: *mut _ = &mut *new_tail;

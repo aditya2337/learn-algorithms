@@ -35,11 +35,14 @@ fn search_algorithms() {
     println!("Linked list length is: {:?}", ll.get_length());
     ll.append(2);
     ll.append(2);
-    println!("Linked list length is: {:?}", ll);
-    println!("Linked list length is: {:?}", ll.get_length());
+    println!("After Append: Linked list length is: {:?}", ll);
+    println!("After Append: Linked list length is: {:?}", ll.get_length());
     ll.insert_at(3, 0);
-    println!("Linked list length is: {:?}", ll);
-    println!("Linked list length is: {:?}", ll.get_length());
+    println!("After Insert: Linked list length is: {:?}", ll);
+    println!("After Insert: Linked list length is: {:?}", ll.get_length());
+    ll.delete_at(1);
+    println!("After Delete: Linked list length is: {:?}", ll);
+    println!("After Delete: Linked list length is: {:?}", ll.get_length());
 }
 
 fn main() {
