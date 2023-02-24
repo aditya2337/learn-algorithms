@@ -1,6 +1,18 @@
-use std::{fmt::Debug, ptr};
+use std::{fmt::Debug, mem, ptr, ops::Index};
 
 type Link<T> = Option<Box<Node<T>>>;
+
+#[derive(Debug)]
+pub struct Node<T> {
+    value: T,
+    next: Link<T>,
+}
+
+impl<T> Node<T> {
+    pub fn new(value: T) -> Self {
+        Self { value, next: None }
+    }
+}
 
 #[derive(Debug)]
 pub struct LinkedList<T> {
@@ -42,34 +54,26 @@ where
         }
     }
 
-    pub fn insert_at(&mut self, value: T, idx: i32) {
+    pub fn insert_at(&mut self, value: T, idx: i32) -> bool {
         self.check_idx_validity(&idx);
 
-        let mut this_ref = &self.head;
+        let mut current_node = self.head.as_mut();
+        let mut current_index = 0;
 
-        for i in 0..idx {
-            this_ref = match this_ref {
-                Some(a) => {
-                    &a.next
-                }
-                None => break
-            };
+        while let Some(node) = current_node {
+            if current_index == idx {
+                let new_node = Box::new(Node {
+                    value,
+                    next: node.next.take(),
+                });
+                node.next = Some(new_node);
+                return true;
+            }
+            current_node = node.next.as_mut();
+            current_index += 1;
         }
 
-
-         match this_ref {
-            Some(node_at_idx) => {
-                let next_node = &node_at_idx.next;
-                match next_node {
-                    Some(existing_next_node) => {
-                        let mut new_node = Box::new(Node { value, next: next_node });
-                        existing_next_node.next = Some(new_node);
-                    }
-                    None => self.append(value)
-                }
-            }
-            None => (),
-         }
+        false
     }
 
     pub fn append(&mut self, value: T) {
@@ -87,16 +91,4 @@ where
     }
 
     fn prepend(&self) {}
-}
-
-#[derive(Debug, Clone)]
-pub struct Node<T> {
-    value: T,
-    next: Link<T>,
-}
-
-impl<T> Node<T> {
-    pub fn new(value: T) -> Self {
-        Self { value, next: None }
-    }
 }

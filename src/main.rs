@@ -37,6 +37,9 @@ fn search_algorithms() {
     ll.append(2);
     println!("Linked list length is: {:?}", ll);
     println!("Linked list length is: {:?}", ll.get_length());
+    ll.insert_at(3, 0);
+    println!("Linked list length is: {:?}", ll);
+    println!("Linked list length is: {:?}", ll.get_length());
 }
 
 fn main() {
