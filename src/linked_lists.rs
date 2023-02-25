@@ -119,3 +119,18 @@ where
 
     fn prepend(&self) {}
 }
+
+pub fn test_ll() {
+    let mut ll = LinkedList::<i32>::new();
+    println!("Linked list length is: {:?}", ll.get_length());
+    ll.append(2);
+    ll.append(2);
+    println!("After Append: Linked list length is: {:?}", ll);
+    println!("After Append: Linked list length is: {:?}", ll.get_length());
+    ll.insert_at(3, 0);
+    println!("After Insert: Linked list length is: {:?}", ll);
+    println!("After Insert: Linked list length is: {:?}", ll.get_length());
+    ll.delete_at(1);
+    println!("After Delete: Linked list length is: {:?}", ll);
+    println!("After Delete: Linked list length is: {:?}", ll.get_length());
+}

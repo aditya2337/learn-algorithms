@@ -3,6 +3,7 @@ mod bubble_sort;
 mod crystal_balls;
 mod linear_search;
 mod linked_lists;
+mod queue;
 
 fn i32_vector_to_string(i32_vec: &Vec<i32>) -> String {
     let string_vec: Vec<String> = i32_vec.iter().map(|x| x.to_string()).collect();
@@ -31,18 +32,7 @@ fn search_algorithms() {
         i32_vector_to_string(&bubble_sort::srt(&mut unsorted_list))
     );
 
-    let mut ll = linked_lists::LinkedList::<i32>::new();
-    println!("Linked list length is: {:?}", ll.get_length());
-    ll.append(2);
-    ll.append(2);
-    println!("After Append: Linked list length is: {:?}", ll);
-    println!("After Append: Linked list length is: {:?}", ll.get_length());
-    ll.insert_at(3, 0);
-    println!("After Insert: Linked list length is: {:?}", ll);
-    println!("After Insert: Linked list length is: {:?}", ll.get_length());
-    ll.delete_at(1);
-    println!("After Delete: Linked list length is: {:?}", ll);
-    println!("After Delete: Linked list length is: {:?}", ll.get_length());
+    linked_lists::test_ll();
 }
 
 fn main() {
