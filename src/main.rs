@@ -4,6 +4,7 @@ mod crystal_balls;
 mod linear_search;
 mod linked_lists;
 mod queue;
+mod path_finding;
 
 fn i32_vector_to_string(i32_vec: &Vec<i32>) -> String {
     let string_vec: Vec<String> = i32_vec.iter().map(|x| x.to_string()).collect();
