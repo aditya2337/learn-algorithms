@@ -8,9 +8,6 @@ struct BinaryNode<T> {
 }
 
 pub fn pre_order_search<T>(head: Link<T>) -> Vec<T> {
-    // if no left and no right return
-    // if left node available move recurse left_child
-    // if right node available move recurse on right_child
     let mut path = vec![];
     walk(head, &mut path);
     path
