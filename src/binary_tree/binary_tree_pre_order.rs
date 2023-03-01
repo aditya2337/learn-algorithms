@@ -12,35 +12,21 @@ pub fn pre_order_search<T>(head: Link<T>) -> Vec<T> {
     // if left node available move recurse left_child
     // if right node available move recurse on right_child
     let mut path = vec![];
-
-    match head {
-        Some(existing_head) => {
-            walk(existing_head, &mut path);
-        }
-        None => (),
-    }
-
+    walk(head, &mut path);
     path
 }
 
-fn walk<T>(node: Box<Node<T>>, path: &mut Vec<T>) {
-    path.push(node.value);
-    if node.left_node.is_none() && node.right_node.is_none() {
-        return;
-    }
+fn walk<T>(node: Link<T>, path: &mut Vec<T>) {
+    match node {
+       Some(existing_node) => {
+           path.push(existing_node.value);
 
-    match node.left_node {
-        Some(left_node) => {
-            walk(left_node, path);
-        }
-        None => (),
-    }
-
-    match node.right_node {
-        Some(right_node) => {
-            walk(right_node, path);
-        }
-        None => (),
+           walk(existing_node.left_node, path);
+           walk(existing_node.right_node, path);
+       }
+       None => {
+           return;
+       }
     }
 }
 
@@ -106,6 +92,6 @@ mod tests {
         };
 
         let path = pre_order_search(tree.root);
-        println!("the pre order traversal for tree is: {:?}", path);
+        assert_eq!(path, vec![1, 3, 8, 11, 4, 5, 30, 31, 33, 35, 32, 12]);
     }
 }
