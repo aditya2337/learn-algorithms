@@ -1,4 +1,5 @@
-use super::{BinaryTree, Node};
+use super::types::{BinaryTree, Node};
+
 
 pub fn get_mock_tree() -> BinaryTree<i32> {
     BinaryTree {

@@ -1,3 +1,5 @@
+use super::types::Link;
+
 pub fn pre_order_search<T>(head: Link<T>) -> Vec<T> {
     let mut path = vec![];
     walk(head, &mut path);
@@ -20,8 +22,7 @@ fn walk<T>(node: Link<T>, path: &mut Vec<T>) {
 
 #[cfg(test)]
 mod tests {
-    use crate::binary_tree::{BinaryTree, mock_tree::get_mock_tree};
-    use crate::binary_tree::Node;
+    use crate::binary_tree::mock_tree::get_mock_tree;
 
     use super::pre_order_search;
 
