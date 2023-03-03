@@ -1,13 +1,3 @@
-use crate::binary_tree::Link;
-use crate::binary_tree::Node;
-use crate::binary_tree;
-
-struct BinaryNode<T> {
-    value: T,
-    left_child: Node<T>,
-    right_child: Node<T>,
-}
-
 pub fn pre_order_search<T>(head: Link<T>) -> Vec<T> {
     let mut path = vec![];
     walk(head, &mut path);
@@ -30,7 +20,8 @@ fn walk<T>(node: Link<T>, path: &mut Vec<T>) {
 
 #[cfg(test)]
 mod tests {
-    use crate::binary_tree::{BinaryTree, Node, mock_tree::get_mock_tree};
+    use crate::binary_tree::{BinaryTree, mock_tree::get_mock_tree};
+    use crate::binary_tree::Node;
 
     use super::pre_order_search;
 
