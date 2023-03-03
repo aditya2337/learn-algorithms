@@ -1,6 +1,8 @@
 use std::fmt::Debug;
 
 pub mod binary_tree_pre_order;
+pub mod breadth_first_search;
+pub mod mock_tree;
 
 #[derive(Debug)]
 pub struct BinaryTree<T> {

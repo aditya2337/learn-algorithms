@@ -1,9 +1,8 @@
 pub fn srt<'a>(unsorted_list: &'a mut Vec<i32>) -> &'a Vec<i32> {
-
     let mut i = 0;
 
     loop {
-        if i >= unsorted_list.len()  {
+        if i >= unsorted_list.len() {
             break;
         }
 
@@ -23,8 +22,6 @@ pub fn srt<'a>(unsorted_list: &'a mut Vec<i32>) -> &'a Vec<i32> {
 
         i = i + 1;
     }
-
-
 
     unsorted_list
 }
