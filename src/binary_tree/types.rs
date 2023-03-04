@@ -24,4 +24,14 @@ pub struct Node<T> {
 
 impl<T> Node<T> where T: Debug {}
 
+impl<T: Clone> Clone for Node<T> {
+    fn clone(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            left_node: self.left_node.clone(),
+            right_node: self.right_node.clone(),
+        }
+    }
+}
+
 pub type Link<T> = Option<Box<Node<T>>>;

@@ -4,25 +4,25 @@ type Link<T> = Option<Box<Node<T>>>;
 
 #[derive(Debug)]
 pub struct Node<T> {
-    value: T,
+    pub value: T,
     next: Link<T>,
 }
 
 impl<T> Node<T> {
-    fn new(value: T) -> Self {
+    pub fn new(value: T) -> Self {
         Self { value, next: None }
     }
 }
 
 #[derive(Debug)]
 pub struct Queue<T> {
-    length: i32,
+    pub length: i32,
     head: Link<T>,
     tail: *mut Node<T>,
 }
 
 impl<T> Queue<T> {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             length: 0,
             head: None,
@@ -30,7 +30,7 @@ impl<T> Queue<T> {
         }
     }
 
-    fn enqueue(&mut self, item: T) {
+    pub fn enqueue(&mut self, item: T) {
         // create a new node
         let mut new_node = Box::new(Node::new(item));
         let raw_tail: *mut _ = &mut *new_node;
@@ -50,25 +50,25 @@ impl<T> Queue<T> {
         self.length += 1;
     }
 
-    fn dequeue(&mut self) {
-        let current_node = self.head.take();
-        match current_node {
+    pub fn dequeue(&mut self) -> Option<T> {
+        let mut current_node = self.head.take();
+        let value = match current_node {
             Some(mut current_node) => {
                 // take the next node from head
                 let next_node = current_node.next.take();
                 // point the head to the next node
                 self.head = next_node;
+                Some(current_node.value)
             }
-            None => {
-                panic!("Nothing in the queue");
-            }
-        }
+            None => None,
+        };
 
         self.length -= 1;
 
         if self.length == 0 {
             self.tail = ptr::null_mut();
         }
+        value
     }
 
     fn peek(&self) -> &Link<T> {
