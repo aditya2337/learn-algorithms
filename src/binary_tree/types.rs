@@ -10,8 +10,8 @@ impl<T> BinaryTree<T>
 where
     T: Debug,
 {
-    pub fn new(height: usize, root: Link<T>) -> Self {
-        Self { height, root }
+    pub fn new() -> Self {
+        Self { height: 0, root: None }
     }
 }
 
@@ -22,7 +22,18 @@ pub struct Node<T> {
     pub right_node: Link<T>,
 }
 
-impl<T> Node<T> where T: Debug {}
+impl<T> Node<T>
+where
+    T: Debug,
+{
+    pub fn new(value: T) -> Self {
+        Self {
+            value,
+            left_node: None,
+            right_node: None,
+        }
+    }
+}
 
 impl<T: Clone> Clone for Node<T> {
     fn clone(&self) -> Self {

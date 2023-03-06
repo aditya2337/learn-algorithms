@@ -2,7 +2,7 @@ use crate::queue::Queue;
 
 use super::types::{BinaryTree, Node};
 
-pub fn breadth_first_search<T: Clone>(tree: &BinaryTree<T>) -> Vec<T> {
+pub fn breadth_first_traversal<T: Clone>(tree: &BinaryTree<T>) -> Vec<T> {
     let mut queue = Queue::new();
     let mut path: Vec<T> = vec![];
 
@@ -30,12 +30,12 @@ fn push_to_queue<T>(value: Option<T>, queue: &mut Queue<T>) {
 mod tests {
     use crate::binary_tree::mock_tree::get_mock_tree;
 
-    use super::breadth_first_search;
+    use super::breadth_first_traversal;
 
     #[test]
-    fn test_pre_order() {
+    fn breadth_first() {
         let tree = get_mock_tree();
-        let path = breadth_first_search(&tree);
+        let path = breadth_first_traversal(&tree);
         assert_eq!(path, vec![1, 3, 4, 8, 11, 5, 12, 30, 31, 32, 33, 35]);
     }
 }
