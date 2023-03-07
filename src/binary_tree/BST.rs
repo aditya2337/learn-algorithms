@@ -18,24 +18,25 @@ impl BinarySearchTree {
         }
     }
 
-    pub fn delete(self, item: i32) {
-        delete_node(self.tree.root, item);
+    pub fn delete(mut self, item: i32) -> Self {
+        self.tree.root = delete_node(self.tree.root, item);
+        self
     }
 }
 
-pub fn min_value_node(node: &Link<i32>) -> &Link<i32> {
-    let mut current = node;
-    while let Some(existing_node) = current {
-        if existing_node.left_node.is_none() {
-            break;
-        }
-        current = &existing_node.left_node;
+fn min_value_node(node: &Node<i32>) -> &Node<i32> {
+    let mut current = &node.left_node;
+    while let Some(left_node) = current {
+        current = &left_node.left_node;
     }
 
-    current
+    match current {
+        Some(current) => current,
+        None => node
+    }
 }
 
-pub fn delete_node(node: Link<i32>, item: i32) -> Link<i32> {
+fn delete_node(node: Link<i32>, item: i32) -> Link<i32> {
     match node {
         Some(mut node) => {
             if item < node.value {
@@ -47,15 +48,24 @@ pub fn delete_node(node: Link<i32>, item: i32) -> Link<i32> {
                 if node.left_node.is_none() {
                     let temp = node.right_node;
                     return temp;
-                } else if node.right_node.is_none() {
-                    let temp = node.left_node;
-                    return temp;
                 }
 
                 // If the node has 2 children
+                match node.right_node {
+                    Some(right_node) => {
+                        let temp = min_value_node(&right_node);
+
+                        node.value = temp.value;
+                        node.right_node = delete_node(Some(right_node), node.value);
+                    }
+                    None => {
+                        let temp = node.left_node;
+                        return temp;
+                    }
+                }
             }
             Some(node)
-        },
+        }
         None => node,
     }
 }
@@ -104,6 +114,10 @@ mod tests {
         tree.insert(8);
         tree.insert(11);
 
+        pre_order = pre_order_traversal(&tree.tree.root);
+        assert_eq!(pre_order, vec![5, 2, 1, 4, 6, 10, 8, 11]);
+
+        tree = tree.delete(1);
         pre_order = pre_order_traversal(&tree.tree.root);
         assert_eq!(pre_order, vec![5, 2, 1, 4, 6, 10, 8, 11]);
     }
