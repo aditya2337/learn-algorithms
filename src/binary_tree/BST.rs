@@ -17,6 +17,59 @@ impl BinarySearchTree {
             self.tree.root = Some(Box::new(Node::new(item)))
         }
     }
+
+    pub fn delete(&mut self, item: i32) {}
+}
+
+fn walk_and_delete(node: Box<Node<i32>>, item: i32) {
+    if item < node.value {
+        if let Some(left_node) = node.left_node {
+            if left_node.value == item {
+                // find the node to replace with
+            } else {
+                walk_and_delete(left_node, item)
+            }
+        }
+    } else {
+        if let Some(right_node) = node.right_node {
+            if right_node.value == item {
+                // find the node to replace with
+            } else {
+                walk_and_delete(right_node, item)
+            }
+        }
+    }
+}
+
+fn replace_by_node(node: &mut Node<i32>) -> Result<&mut Box<Node<i32>>, &'static str> {
+    // if left child
+    if let Some(left_node) = node.left_node.as_mut() {
+        let mut node_to_replace = left_node;
+
+        // ...if left has a right child, get the right most child
+        let mut left_right_node = node_to_replace.right_node.as_mut();
+        while let Some(right_node) = left_right_node {
+            node_to_replace = right_node;
+            left_right_node = node_to_replace.right_node.as_mut();
+        }
+
+        return Ok(node_to_replace);
+    }
+    // else if right child
+    else if let Some(right_node) = node.right_node.as_mut() {
+        let mut node_to_replace = right_node;
+
+        // ...if right child has a left child, get the left most child
+        let mut right_left_node = right_node.left_node.as_mut();
+        while let Some(left_node) = right_left_node {
+            node_to_replace = left_node;
+            right_left_node = left_node.right_node.as_mut();
+        }
+
+        return Ok(node_to_replace);
+    }
+    // else return None
+    Err("node not found 😱")
 }
 
 fn walk_and_insert(node: &mut Node<i32>, item: i32) {
