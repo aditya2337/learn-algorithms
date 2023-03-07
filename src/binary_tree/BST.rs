@@ -1,5 +1,3 @@
-use std::ops::{Deref, DerefMut};
-
 use super::types::{BinaryTree, Link, Node};
 
 #[derive(Debug)]
@@ -25,6 +23,18 @@ impl BinarySearchTree {
     }
 }
 
+pub fn min_value_node(node: &Link<i32>) -> &Link<i32> {
+    let mut current = node;
+    while let Some(existing_node) = current {
+        if existing_node.left_node.is_none() {
+            break;
+        }
+        current = &existing_node.left_node;
+    }
+
+    current
+}
+
 pub fn delete_node(node: Link<i32>, item: i32) -> Link<i32> {
     match node {
         Some(mut node) => {
@@ -37,7 +47,12 @@ pub fn delete_node(node: Link<i32>, item: i32) -> Link<i32> {
                 if node.left_node.is_none() {
                     let temp = node.right_node;
                     return temp;
+                } else if node.right_node.is_none() {
+                    let temp = node.left_node;
+                    return temp;
                 }
+
+                // If the node has 2 children
             }
             Some(node)
         },
