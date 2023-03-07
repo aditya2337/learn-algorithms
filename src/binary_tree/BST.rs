@@ -119,6 +119,6 @@ mod tests {
 
         tree = tree.delete(1);
         pre_order = pre_order_traversal(&tree.tree.root);
-        assert_eq!(pre_order, vec![5, 2, 1, 4, 6, 10, 8, 11]);
+        assert_eq!(pre_order, vec![5, 2, 4, 6, 10, 8, 11]);
     }
 }
