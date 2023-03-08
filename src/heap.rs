@@ -40,6 +40,26 @@ impl MinHeap {
         }
     }
 
+    fn swap_down(&mut self, idx: usize) {
+        let item = self.harr[idx];
+        let mut smallest = idx;
+
+        let left = self.get_left_child_idx(idx);
+        let right = self.get_left_child_idx(idx);
+
+        if left < self.harr.len() && self.harr[left] < item {
+            smallest = left;
+        } else if right < self.harr.len() && self.harr[right] < item {
+            smallest = right;
+        }
+
+        if smallest != idx {
+            self.harr[idx] = self.harr[smallest];
+            self.harr[smallest] = item;
+            self.swap_down(smallest);
+        }
+    }
+
     pub fn insert(&mut self, item: i32) {
         self.harr.push(item);
 
@@ -47,8 +67,23 @@ impl MinHeap {
             self.swap_up(self.harr.len() - 1);
         }
     }
-    pub fn delete(&mut self) {
-        self.harr[0] = self.harr[self.harr.len() - 1];
+
+    pub fn delete_min(&mut self) {
+        let last_elem = self.harr.pop();
+        if let Some(last_elem) = last_elem {
+            self.harr[0] = last_elem;
+            self.swap_down(0);
+        }
+    }
+
+    pub fn delete_element(&mut self, item: i32) {
+        let idx = self.harr.iter().position(|x| x == &item).unwrap();
+        // our assumption is that the heap won't store 0,
+        // This is not ideal, but hey you get the idea 😉
+        const MIN_VAL: i32 = 0;
+        self.harr[idx] = MIN_VAL;
+        self.swap_up(idx);
+        self.delete_min();
     }
 }
 
@@ -67,6 +102,10 @@ mod tests {
         heap.insert(15);
         heap.insert(18);
         heap.insert(1);
-        assert_eq!(heap.harr, vec![20]);
+        assert_eq!(heap.harr, vec![1, 15, 20, 21, 18]);
+        heap.delete_min();
+        assert_eq!(heap.harr, vec![15, 18, 20, 21]);
+        heap.delete_element(21);
+        assert_eq!(heap.harr, vec![15, 18, 20]);
     }
 }
