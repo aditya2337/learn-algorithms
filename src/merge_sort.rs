@@ -25,12 +25,11 @@ fn merge(arr: &mut Vec<i32>, p: usize, q: usize, r: usize) {
         if left_arr[i] < right_arr[j] {
             arr[k] = left_arr[i];
             i += 1;
-            k += 1;
         } else {
             arr[k] = right_arr[j];
             j += 1;
-            k += 1;
         }
+        k += 1;
     }
 
     while i < left_arr.len() {
