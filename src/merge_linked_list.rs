@@ -12,41 +12,27 @@ impl ListNode {
 }
 
 pub fn merge_two_lists(
-    list1: Option<Box<ListNode>>,
-    list2: Option<Box<ListNode>>,
+    mut list1: Option<Box<ListNode>>,
+    mut list2: Option<Box<ListNode>>,
 ) -> Option<Box<ListNode>> {
-    // if list 1 is None
-    // return list 2
-    // if list 2 is None
-    // return list 1
-    match list1 {
-        Some(list) => match list2 {
-            Some(other_list) => {
-                let head = if list.val < other_list.val {
-                    list.val
-                } else {
-                    other_list.val
-                };
-                let mut new_list = ListNode::new(head);
-                let mut list_next = list.next.as_ref();
-                let mut other_list_next = other_list.next.as_ref();
-
-                while let (Some(list), Some(other_list)) = (list_next, other_list_next) {
-                    if list.val < other_list.val {
-                        new_list.next = Some(Box::new(ListNode::new(list.val)));
-                        list_next = list.next.as_ref();
-                    } else {
-                        new_list.next = Some(Box::new(ListNode::new(other_list.val)));
-                        other_list_next = other_list.next.as_ref();
-                    }
-                }
-
-                Some(Box::new(new_list))
-            }
-            None => Some(list),
-        },
-        None => list2,
+    let mut new_list: Option<Box<ListNode>> = None;
+    let mut tail = &mut new_list;
+    while let (Some(list), Some(other_list)) = (list1.as_ref(), list2.as_ref()) {
+        println!("List 1: {:?}", list);
+        println!("List 2: {:?}", other_list);
+        if list.val < other_list.val {
+            let node = ListNode::new(list.val);
+            *tail = Some(Box::new(node));
+            list1 = list.next.clone();
+        } else {
+            *tail = Some(Box::new(ListNode::new(other_list.val)));
+            list2 = other_list.next.clone();
+        }
+        tail = &mut tail.as_mut().unwrap().next;
     }
+
+    *tail = if list1.is_some() { list1 } else { list2 };
+    new_list
 }
 
 fn create_linked_list(nums: Vec<i32>) -> Option<Box<ListNode>> {
@@ -63,14 +49,13 @@ fn create_linked_list(nums: Vec<i32>) -> Option<Box<ListNode>> {
 
 #[cfg(test)]
 mod tests {
-    use crate::merge_linked_list::create_linked_list;
     use super::merge_two_lists;
-
+    use crate::merge_linked_list::create_linked_list;
 
     #[test]
     fn test_merge() {
-        let list_a = create_linked_list(vec![1, 2, 3]);
-        let list_b = create_linked_list(vec![4, 5, 6]);
+        let list_a = create_linked_list(vec![1, 2, 4]);
+        let list_b = create_linked_list(vec![1, 3, 4]);
 
         let meged_linked_list = merge_two_lists(list_a, list_b);
 
