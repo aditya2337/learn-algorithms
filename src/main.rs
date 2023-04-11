@@ -3,6 +3,7 @@ mod bubble_sort;
 mod crystal_balls;
 mod linear_search;
 mod linked_lists;
+mod merge_linked_list;
 mod queue;
 mod path_finding;
 mod quick_sort;
