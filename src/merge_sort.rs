@@ -1,6 +1,4 @@
 pub fn sort(arr: &mut Vec<i32>, p: usize, r: usize) {
-    // pre
-
     if p >= r {
         return;
     }

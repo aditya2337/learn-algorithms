@@ -4,6 +4,8 @@ mod crystal_balls;
 mod linear_search;
 mod linked_lists;
 mod merge_linked_list;
+mod reverse_linked_list;
+mod heap_sort;
 mod queue;
 mod path_finding;
 mod quick_sort;
