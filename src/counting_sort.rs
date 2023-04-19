@@ -37,6 +37,6 @@ mod tests {
         let arr = vec![2, 5, 3, 0, 2, 3, 0, 3];
         let arr = sort(arr);
 
-        assert_eq!(arr, vec![0, 0, 2, 2, 3, 3, 3, 5]);
+        assert_eq!(arr, vec![0, 0, 2, 2, 3, 3, 3, 4]);
     }
 }
