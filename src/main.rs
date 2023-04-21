@@ -5,6 +5,7 @@ mod linear_search;
 mod linked_lists;
 mod merge_linked_list;
 mod reverse_linked_list;
+mod search_insert_pos;
 mod heap_sort;
 mod counting_sort;
 mod queue;
