@@ -17,6 +17,22 @@ impl<T> DoublyLinkedList<T> {
         }
     }
 
+    pub fn append_front(&mut self, val: T) {
+        let new_node = Node::new(val);
+
+        match self.head.take() {
+            Some(current_head) => {
+                new_node.borrow_mut().next = Some(current_head.clone());
+                current_head.borrow_mut().prev = Some(new_node.clone());
+            }
+            None => {
+                self.tail = Some(new_node.clone());
+            }
+        }
+        self.head = Some(new_node);
+        self.length += 1;
+    }
+
     pub fn append(&mut self, val: T) {
         let new_node = Node::new(val);
 
@@ -49,6 +65,26 @@ impl<T> DoublyLinkedList<T> {
             self.length -= 1;
             Rc::try_unwrap(tail_node).ok().unwrap().into_inner().val
         })
+    }
+
+    pub fn pop_front(&mut self) -> Option<T> {
+        match self.head.take() {
+            Some(current_head) => {
+                match current_head.borrow_mut().next.take() {
+                    Some(next_node) => {
+                        next_node.borrow_mut().prev = None;
+                        self.head = Some(next_node);
+                    }
+                    None => {
+                        self.head = None;
+                        self.tail = None;
+                    }
+                }
+                self.length -= 1;
+                Some(Rc::try_unwrap(current_head).ok().unwrap().into_inner().val)
+            }
+            None => None
+        }
     }
 }
 
