@@ -16,6 +16,7 @@ mod heap;
 mod insertion_sort;
 mod merge_sort;
 mod matrix_multiply;
+mod doubly_linked_list;
 
 fn i32_vector_to_string(i32_vec: &Vec<i32>) -> String {
     let string_vec: Vec<String> = i32_vec.iter().map(|x| x.to_string()).collect();
