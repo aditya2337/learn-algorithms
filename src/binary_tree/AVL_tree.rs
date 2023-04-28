@@ -33,25 +33,25 @@ impl AVLTree {
         if self.root.is_none() {
             self.root = Some(Box::new(new_node));
         } else {
-            walk_and_insert(self.root.as_mut().unwrap(), val);
+            walk_and_insert(self.root.as_mut().unwrap(), new_node);
         }
     }
 }
 
-fn walk_and_insert(node: &mut Node, val: i32) {
-    if node.val > val {
+fn walk_and_insert(node: &mut Node, new_node: Node) {
+    if node.val > new_node.val {
         if node.left_child.is_none() {
-            node.left_child = Some(Box::new(Node::new(val)));
+            node.left_child = Some(Box::new(new_node));
             return;
         } else {
-            return walk_and_insert(node.left_child.as_mut().unwrap(), val);
+            return walk_and_insert(node.left_child.as_mut().unwrap(), new_node);
         }
     } else {
         if node.right_child.is_none() {
-            node.right_child = Some(Box::new(Node::new(val)));
+            node.right_child = Some(Box::new(new_node));
             return;
         } else {
-            return walk_and_insert(node.right_child.as_mut().unwrap(), val);
+            return walk_and_insert(node.right_child.as_mut().unwrap(), new_node);
         }
     }
 }
