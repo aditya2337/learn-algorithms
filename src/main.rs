@@ -1,31 +1,17 @@
 mod binary_search;
-mod bubble_sort;
+mod binary_tree;
 mod crystal_balls;
+mod heap;
 mod linear_search;
 mod linked_lists;
-mod merge_linked_list;
-mod reverse_linked_list;
-mod search_insert_pos;
-mod heap_sort;
-mod counting_sort;
-mod queue;
-mod path_finding;
-mod quick_sort;
-mod binary_tree;
-mod heap;
-mod insertion_sort;
-mod merge_sort;
 mod matrix_multiply;
-mod doubly_linked_list;
-
-fn i32_vector_to_string(i32_vec: &Vec<i32>) -> String {
-    let string_vec: Vec<String> = i32_vec.iter().map(|x| x.to_string()).collect();
-    string_vec.join(",")
-}
+mod path_finding;
+mod queue;
+mod search_insert_pos;
+mod sorting;
 
 fn search_algorithms() {
     let haystack: Vec<i32> = vec![1, 2, 4, 5, 6, 6, 7, 8];
-    let mut unsorted_list: Vec<i32> = vec![1, 11, 9, 5, 2, 24, 4, 8];
 
     println!(
         "Linear search: {}",
@@ -40,12 +26,6 @@ fn search_algorithms() {
         "Binary search: {}",
         crystal_balls::crystal_balls(&vec![0, 0, 1, 1, 1, 1])
     );
-    println!(
-        "Bubble sortedList: {}",
-        i32_vector_to_string(&bubble_sort::srt(&mut unsorted_list))
-    );
-
-    linked_lists::test_ll();
 }
 
 fn main() {
