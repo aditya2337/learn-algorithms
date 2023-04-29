@@ -49,8 +49,9 @@ fn create_linked_list(nums: Vec<i32>) -> Option<Box<ListNode>> {
 
 #[cfg(test)]
 mod tests {
+    use crate::linked_lists::merge_linked_list::create_linked_list;
+
     use super::merge_two_lists;
-    use crate::merge_linked_list::create_linked_list;
 
     #[test]
     fn test_merge() {

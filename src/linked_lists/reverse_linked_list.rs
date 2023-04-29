@@ -37,7 +37,8 @@ fn create_linked_list(nums: Vec<i32>) -> Option<Box<ListNode>> {
 
 #[cfg(test)]
 mod tests {
-    use crate::reverse_linked_list::{create_linked_list, reverse_list};
+    use crate::linked_lists::reverse_linked_list::{create_linked_list, reverse_list};
+
 
     #[test]
     fn test_merge() {
