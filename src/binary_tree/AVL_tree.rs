@@ -43,7 +43,11 @@ impl AVLNode {
         let left_child = self.get_left_height();
         let right_child = self.get_right_height();
 
-        self.height = max(left_child, right_child);
+        let height = self.height;
+
+        println!("{height}");
+
+        self.height = 1 + max(left_child, right_child);
     }
 
     fn rotate_left(&mut self) -> Link {
@@ -88,6 +92,7 @@ impl AVLNode {
     pub fn insert(&mut self, val: i32) {
         let new_node = Self::new(val);
         walk_and_insert(self, new_node);
+        self.update_height();
         self.balance();
     }
 }
