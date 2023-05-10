@@ -8,6 +8,7 @@ mod matrix_multiply;
 mod path_finding;
 mod queue;
 mod search_insert_pos;
+mod dynamic_programming;
 mod sorting;
 
 fn search_algorithms() {
