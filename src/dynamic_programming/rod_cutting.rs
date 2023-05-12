@@ -1,6 +1,9 @@
 use std::cmp;
 
-const PRICES: [u8; 10] = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30];
+const PRICES: [u8; 40] = [
+    1, 5, 8, 9, 10, 17, 17, 20, 24, 30, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30, 1, 5, 8, 9, 10, 17, 17,
+    20, 24, 30, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30,
+];
 
 pub fn rod_cut_recursively(idx: usize) -> u8 {
     if idx == 0 {
@@ -21,8 +24,8 @@ mod tests {
 
     #[test]
     fn test_rod_cut() {
-        let max = rod_cut_recursively(4);
+        let max = rod_cut_recursively(40);
 
-        assert_eq!(max, 10);
+        assert_eq!(max, 120);
     }
 }
