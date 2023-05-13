@@ -24,8 +24,9 @@ mod tests {
 
     #[test]
     fn test_rod_cut() {
+        let max = rod_cut_recursively(4);
+        assert_eq!(max, 10);
         let max = rod_cut_recursively(40);
-
         assert_eq!(max, 120);
     }
 }
