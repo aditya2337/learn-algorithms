@@ -42,9 +42,27 @@ fn memoized_cut_rod_aux(idx: usize, r: &mut Vec<u8>) -> u8 {
     return q;
 }
 
+pub fn rod_cut_bottom_up(idx: usize) -> u8 {
+    if idx == 0 {
+        return 0;
+    }
+    let length = idx + 1;
+    let mut r = vec![0; length];
+
+    for j in 1..length {
+        let mut q = u8::MIN;
+        for i in 1..j {
+            q = cmp::max(q, PRICES[i] + r[j - i - 1])
+        }
+        r[j] = q;
+    }
+
+    return r[idx];
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::dynamic_programming::rod_cutting::rod_cut_top_down;
+    use crate::dynamic_programming::rod_cutting::{rod_cut_bottom_up, rod_cut_top_down};
 
     use super::rod_cut_recursively;
 
@@ -60,5 +78,8 @@ mod tests {
         // Runs in some ms
         let dp_max = rod_cut_top_down(40);
         assert_eq!(dp_max, 120);
+
+        let dp_max_bottom_up = rod_cut_bottom_up(40);
+        assert_eq!(dp_max_bottom_up, 120);
     }
 }
