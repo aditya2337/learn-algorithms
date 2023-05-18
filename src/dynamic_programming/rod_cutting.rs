@@ -72,8 +72,8 @@ mod tests {
         assert_eq!(max, 10);
 
         // Takes about 4 s
-        // let max = rod_cut_recursively(40);
-        // assert_eq!(max, 120);
+        let max = rod_cut_recursively(40);
+        assert_eq!(max, 120);
 
         // Runs in some ms
         let dp_max = rod_cut_top_down(40);
