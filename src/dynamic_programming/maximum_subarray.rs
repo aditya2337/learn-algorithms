@@ -2,14 +2,14 @@ pub fn max_sub_array(nums: Vec<i32>) -> i32 {
     let mut max = nums[0];
 
     for i in 0..nums.len() {
-        let mut a = vec![0; nums.len() - i];
-        a[0] = nums[i];
-        max = std::cmp::max(max, a[0]);
+        let mut r = vec![0; nums.len() - i];
+        r[0] = nums[i];
+        max = std::cmp::max(max, r[0]);
         for j in (i + 1)..nums.len() {
             let a_idx = j - i;
-            let sum = nums[j] + a[a_idx - 1];
+            let sum = nums[j] + r[a_idx - 1];
             max = std::cmp::max(max, sum);
-            a[a_idx] = sum;
+            r[a_idx] = sum;
         }
     }
 
