@@ -1,6 +1,8 @@
 pub fn max_sub_array(nums: Vec<i32>) -> i32 {
     // max_sub_array_iterative(nums)
-    max_sub_array_recursive(nums)
+    // max_sub_array_recursive(nums)
+    // max_sub_array_linear(nums)
+    max_sub_array_kadane(nums)
 }
 pub fn max_sub_array_iterative(nums: Vec<i32>) -> i32 {
     let mut max = nums[0];
@@ -36,6 +38,34 @@ pub fn max_sub_array_recursive(nums: Vec<i32>) -> i32 {
     }
 
     solve(&nums, 0, false)
+}
+
+pub fn max_sub_array_linear(nums: Vec<i32>) -> i32 {
+    let mut max_sub = nums[0];
+    let mut curr_sum = 0;
+
+    for i in 0..nums.len() {
+        if curr_sum < 0 {
+            curr_sum = 0;
+        }
+
+        curr_sum += nums[i];
+        max_sub = std::cmp::max(max_sub, curr_sum);
+    }
+
+    max_sub
+}
+
+pub fn max_sub_array_kadane(nums: Vec<i32>) -> i32 {
+    let mut max_sub = nums[0];
+    let mut curr_sum = nums[0];
+
+    for i in 1..nums.len() {
+        curr_sum = std::cmp::max(nums[i], curr_sum + nums[i]);
+        max_sub = std::cmp::max(max_sub, curr_sum);
+    }
+
+    max_sub
 }
 
 #[cfg(test)]
