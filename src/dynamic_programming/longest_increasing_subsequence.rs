@@ -1,22 +1,18 @@
 pub fn length_of_lis(nums: Vec<i32>) -> i32 {
-    let mut max = 0;
-    let len = nums.len() + 1;
-    let mut r = vec![vec![0; len]; len];
+    let mut max = 1;
+    let mut lis = vec![1; nums.len()];
 
-    for i in 1..len {
-        for j in (i + 1)..len {
-            let new_val: i32;
-            if nums[i - 1] > nums[j - 1] {
-                new_val = 1 + r[i - 1][j - 1];
-            } else {
-                new_val = std::cmp::max(r[i - 1][j], r[i][j - 1]);
+    for i in (0..nums.len()).rev() {
+        for j in (i + 1)..nums.len() {
+            if nums[j] > nums[i] {
+                lis[i] = std::cmp::max(lis[i], 1 + lis[j]);
+                if lis[i] > max {
+                    max = lis[i];
+                }
             }
-            if new_val > max {
-                max = new_val.clone();
-            }
-            r[i][j] = new_val;
         }
     }
+
     max
 }
 
@@ -43,5 +39,12 @@ mod tests {
         let arr = vec![7, 7, 7, 7, 7, 7, 7];
 
         assert_eq!(length_of_lis(arr), 1);
+    }
+
+        #[test]
+    fn length_of_lis_test_4() {
+        let arr = vec![-2,-1];
+
+        assert_eq!(length_of_lis(arr), 2);
     }
 }
