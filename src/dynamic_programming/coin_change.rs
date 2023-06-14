@@ -3,54 +3,42 @@ pub fn coin_change(coins: Vec<i32>, amount: i32) -> i32 {
         return 0;
     }
 
-    let min_coins = -1;
+    let mut dp: Vec<i32> = vec![-1; amount as usize + 1];
 
-    let mut dp: Vec<i32> = vec![-1; amount as usize];
-
-    cal_min_coins(&coins, amount, 0, min_coins, &mut dp)
+    cal_min_coins(&coins, amount, 0, &mut dp)
 }
 
-fn cal_min_coins(
-    coins: &Vec<i32>,
-    amount: i32,
-    total_coins: i32,
-    mut min_coins: i32,
-    dp: &mut Vec<i32>,
-) -> i32 {
+fn cal_min_coins(coins: &Vec<i32>, amount: i32, total_coins: i32, dp: &mut Vec<i32>) -> i32 {
     if amount < 0 {
         return -1;
     }
 
     if amount == 0 {
-        println!("{total_coins}, yes");
         return total_coins;
     }
 
+    let mut min_coins = -1;
+
     for coin in coins.iter() {
         let result = amount - coin;
-        println!("{result} aaa {coin} aaa {amount}");
 
         if result < 0 {
             continue;
-        }
-
-        let mut coins_used = -1;
-
-        if dp[result as usize] > 0 {
-            coins_used = dp[result as usize];
         } else {
-            coins_used = cal_min_coins(coins, result, total_coins + 1, min_coins, dp);
-            println!("{coins_used}, {result}");
-            dp[result as usize] = coins_used;
-        }
-
-        // println!("how many");
-
-        if coins_used > 0 && min_coins < 0 || coins_used < min_coins {
-            min_coins = coins_used;
+            let coins_used;
+            if result == 0 {
+                coins_used = total_coins + 1;
+            } else if dp[result as usize] > 0 {
+                coins_used = dp[result as usize];
+            } else {
+                coins_used = cal_min_coins(coins, result, total_coins + 1, dp);
+                dp[result as usize] = coins_used;
+            }
+            if min_coins > 0 && coins_used < min_coins || (min_coins < 0 && coins_used > 0) {
+                min_coins = coins_used;
+            }
         }
     }
-    // println!("{min_coins}");
     min_coins
 }
 
