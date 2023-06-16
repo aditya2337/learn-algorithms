@@ -13,32 +13,28 @@ fn cal_min_coins(coins: &Vec<i32>, amount: i32, total_coins: i32, dp: &mut Vec<i
         return -1;
     }
 
+    if dp[amount as usize] > 0 {
+        return dp[amount as usize];
+    }
+
     if amount == 0 {
-        return total_coins;
+        return 0;
     }
 
     let mut min_coins = -1;
 
-    for coin in coins.iter() {
-        let result = amount - coin;
+    for &coin in coins {
+        if coin <= amount {
+            let result = cal_min_coins(coins, amount - coin, total_coins, dp);
 
-        if result < 0 {
-            continue;
-        } else {
-            let coins_used;
-            if result == 0 {
-                coins_used = total_coins + 1;
-            } else if dp[result as usize] > 0 {
-                coins_used = dp[result as usize];
-            } else {
-                coins_used = cal_min_coins(coins, result, total_coins + 1, dp);
-                dp[result as usize] = coins_used;
-            }
-            if min_coins > 0 && coins_used < min_coins || (min_coins < 0 && coins_used > 0) {
-                min_coins = coins_used;
+            if result != -1 && (min_coins < 0 || result < min_coins) {
+                min_coins = result + 1;
             }
         }
     }
+
+    dp[amount as usize] = min_coins;
+
     min_coins
 }
 
@@ -51,10 +47,10 @@ mod tests {
 
     #[rstest]
     #[case(vec![1,2,5], 11, 3)]
-    // #[case(vec![1,3, 4, 5], 7, 2)]
-    // #[case(vec![2], 3, -1)]
-    // #[case(vec![1], 0, 0)]
-    // #[case(vec![1,2,5], 100, 0)]
+    #[case(vec![1,3, 4, 5], 7, 2)]
+    #[case(vec![2], 3, -1)]
+    #[case(vec![1], 0, 0)]
+    #[case(vec![1,2,5], 100, 20)]
     fn coin_change_test(
         #[case] coins: Vec<i32>,
         #[case] amount: i32,
