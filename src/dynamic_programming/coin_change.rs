@@ -5,10 +5,10 @@ pub fn coin_change(coins: Vec<i32>, amount: i32) -> i32 {
 
     let mut dp: Vec<i32> = vec![-1; amount as usize + 1];
 
-    cal_min_coins(&coins, amount, 0, &mut dp)
+    cal_min_coins(&coins, amount, &mut dp)
 }
 
-fn cal_min_coins(coins: &Vec<i32>, amount: i32, total_coins: i32, dp: &mut Vec<i32>) -> i32 {
+fn cal_min_coins(coins: &Vec<i32>, amount: i32, dp: &mut Vec<i32>) -> i32 {
     if amount < 0 {
         return -1;
     }
@@ -25,7 +25,7 @@ fn cal_min_coins(coins: &Vec<i32>, amount: i32, total_coins: i32, dp: &mut Vec<i
 
     for &coin in coins {
         if coin <= amount {
-            let result = cal_min_coins(coins, amount - coin, total_coins, dp);
+            let result = cal_min_coins(coins, amount - coin, dp);
 
             if result != -1 && (min_coins < 0 || result < min_coins) {
                 min_coins = result + 1;
