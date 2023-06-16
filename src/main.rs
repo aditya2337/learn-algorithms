@@ -10,6 +10,7 @@ mod queue;
 mod search_insert_pos;
 mod dynamic_programming;
 mod sorting;
+mod graphs;
 
 fn search_algorithms() {
     let haystack: Vec<i32> = vec![1, 2, 4, 5, 6, 6, 7, 8];
