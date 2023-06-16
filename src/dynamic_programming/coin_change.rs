@@ -2,10 +2,11 @@ pub fn coin_change(coins: Vec<i32>, amount: i32) -> i32 {
     if amount == 0 {
         return 0;
     }
+    cal_min_coins_bottom_up(&coins, amount)
 
-    let mut dp: Vec<i32> = vec![-1; amount as usize + 1];
+    // let mut dp: Vec<i32> = vec![-1; amount as usize + 1];
 
-    cal_min_coins(&coins, amount, &mut dp)
+    // cal_min_coins(&coins, amount, &mut dp)
 }
 
 fn cal_min_coins(coins: &Vec<i32>, amount: i32, dp: &mut Vec<i32>) -> i32 {
@@ -38,6 +39,25 @@ fn cal_min_coins(coins: &Vec<i32>, amount: i32, dp: &mut Vec<i32>) -> i32 {
     min_coins
 }
 
+fn cal_min_coins_bottom_up(coins: &Vec<i32>, amount: i32) -> i32 {
+    let mut dp: Vec<i32> = vec![amount + 1; amount as usize + 1];
+    dp[0] = 0;
+
+    for i in 1..(amount + 1) {
+        for &coin in coins {
+            if i - coin >= 0 {
+                dp[i as usize] = std::cmp::min(dp[i as usize], 1 + dp[(i - coin) as usize]);
+            }
+        }
+    }
+
+    if dp[amount as usize] == amount + 1 {
+        return -1;
+    }
+
+    return dp[amount as usize];
+}
+
 #[cfg(test)]
 mod tests {
 
@@ -51,6 +71,7 @@ mod tests {
     #[case(vec![2], 3, -1)]
     #[case(vec![1], 0, 0)]
     #[case(vec![1,2,5], 100, 20)]
+    #[case(vec![186,419,83,408], 6249, 20)]
     fn coin_change_test(
         #[case] coins: Vec<i32>,
         #[case] amount: i32,
