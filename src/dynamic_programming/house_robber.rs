@@ -20,6 +20,7 @@ mod tests {
     #[case(vec![1,2,3,1], 4)]
     #[case(vec![2,7,9,3,1], 12)]
     #[case(vec![2,1,1,2], 4)]
+    #[case(vec![2,1,1,2, 5, 6], 10)]
     fn rob_test(#[case] nums: Vec<i32>, #[case] expected_output: i32) {
         assert_eq!(
             crate::dynamic_programming::house_robber::rob(nums),
